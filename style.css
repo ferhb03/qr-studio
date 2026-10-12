@@ -8,3 +8,12 @@ main{padding:48px 32px 42px}.eyebrow,.step{font-size:11px;letter-spacing:1.6px;f
 @media(max-width:800px){.workspace{grid-template-columns:1fr}.preview-column{position:static}.qr-stage{min-height:280px}.intro{max-width:550px}main{padding-top:32px}.panel{padding:24px}.site-header{padding-top:20px;padding-bottom:20px}input{font-size:16px}}
 @media(max-width:440px){.site-header,main,footer{padding-left:18px;padding-right:18px}.brand{font-size:22px}.privacy-pill{font-size:10px;padding:7px 9px}h1{letter-spacing:-1px}.field-grid{grid-template-columns:1fr}.panel{padding:20px}.panel-heading{align-items:flex-start}.panel h2{font-size:20px}.form-hint{font-size:12px}.desktop-break{display:none}.density-heading{flex-wrap:wrap}footer{flex-direction:column;gap:10px}}
 @media(prefers-reduced-motion:no-preference){button,input{transition:background .15s,border-color .15s}}
+
+.site-header { gap: 20px; }
+.header-actions { display: flex; align-items: center; gap: 22px; }
+.home-link { text-decoration: none; font-size: 12px; color: var(--muted); }
+.home-link:hover { color: var(--accent); }
+@media (max-width: 600px) {
+  .site-header { flex-wrap: wrap; gap: 17px; }
+  .header-actions { width: 100%; justify-content: space-between; gap: 12px; }
+}
