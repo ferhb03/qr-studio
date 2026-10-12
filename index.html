@@ -1,1 +1,67 @@
 
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Creá un QR de contacto gratis. Descargá PNG, SVG y vCard, con tus datos procesados en tu dispositivo.">
+  <meta name="color-scheme" content="light">
+  <title>QR Studio · Tu contacto, en un escaneo</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="vendor/qrcode.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="./" aria-label="QR Studio, inicio"><span class="brand-icon" aria-hidden="true">▦</span> QR <strong>Studio</strong></a><span class="privacy-pill">Sin cuentas. Sin costo.</span></header>
+  <main>
+    <section class="intro"><span class="eyebrow">CONTACTOS · VCARD 3.0</span><h1>Tu próxima conexión<br>empieza con un QR.</h1><p>Convertí tus datos en una tarjeta de contacto.<br class="desktop-break"> Lista para escanear, guardar y compartir.</p></section>
+    <div class="workspace">
+      <section class="panel form-panel" aria-labelledby="form-title">
+        <div class="panel-heading"><div><span class="step">01 / COMPLETÁ</span><h2 id="form-title">Datos del contacto</h2></div><button type="button" id="example" class="text-button">Cargar ejemplo</button></div>
+        <p class="form-hint">Completá al menos nombre o apellido. El resto es opcional.</p>
+        <form id="contact-form" novalidate>
+          <fieldset><legend>Información personal</legend><div class="field-grid">
+            <div class="field"><label for="firstName">Nombre</label><input id="firstName" name="firstName" autocomplete="given-name" maxlength="100" placeholder="Tu nombre"></div>
+            <div class="field"><label for="lastName">Apellido</label><input id="lastName" name="lastName" autocomplete="family-name" maxlength="100" placeholder="Tu apellido"></div>
+          </div></fieldset>
+          <fieldset><legend>Información profesional</legend><div class="field-grid">
+            <div class="field"><label for="company">Empresa</label><input id="company" name="company" autocomplete="organization" maxlength="150" placeholder="Nombre de la empresa"></div>
+            <div class="field"><label for="title">Cargo / Puesto</label><input id="title" name="title" autocomplete="organization-title" maxlength="150" placeholder="Tu rol"></div>
+          </div></fieldset>
+          <fieldset><legend>Contacto</legend><div class="field-grid">
+            <div class="field"><label for="mobile">Celular</label><input id="mobile" name="mobile" type="tel" autocomplete="mobile tel" maxlength="40" placeholder="+54 9 11 1234 5678" aria-describedby="phone-hint"></div>
+            <div class="field"><label for="workPhone">Teléfono laboral</label><input id="workPhone" name="workPhone" type="tel" autocomplete="work tel" maxlength="40" placeholder="+54 11 1234 5678" aria-describedby="phone-hint"></div>
+            <div class="field full"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="nombre@empresa.com"></div>
+          </div><p class="field-hint" id="phone-hint">Incluí el código de país para compartir tu contacto internacionalmente.</p></fieldset>
+          <fieldset><legend>Enlaces</legend><div class="field-grid">
+            <div class="field full"><label for="website">Página web</label><input id="website" name="website" type="text" inputmode="url" autocomplete="url" maxlength="500" placeholder="https://tuempresa.com"></div>
+            <div class="field full"><label for="linkedin">LinkedIn</label><input id="linkedin" name="linkedin" type="text" inputmode="url" maxlength="500" placeholder="https://www.linkedin.com/in/tu-perfil"></div>
+          </div><p class="field-hint">Podés incluir ambos enlaces. Si omitís https://, lo agregamos.</p></fieldset>
+          <fieldset><legend>Ubicación</legend><div class="field-grid">
+            <div class="field"><label for="country">País</label><input id="country" name="country" autocomplete="country-name" maxlength="100" placeholder="Argentina"></div>
+            <div class="field"><label for="region">Provincia</label><input id="region" name="region" autocomplete="address-level1" maxlength="100" placeholder="Buenos Aires"></div>
+          </div></fieldset>
+          <div id="form-errors" class="error-summary" role="alert" hidden></div>
+          <div class="form-actions"><button type="submit" class="button primary" id="generate">Generar QR <span aria-hidden="true">↗</span></button><button type="reset" class="text-button">Limpiar</button></div>
+        </form>
+      </section>
+      <aside class="preview-column">
+        <section class="panel preview-panel" aria-labelledby="preview-title">
+          <div class="panel-heading"><div><span class="step">02 / COMPARTÍ</span><h2 id="preview-title">Tu código QR</h2></div><span class="type-pill">Estático</span></div>
+          <div class="qr-stage"><div id="empty-state"><span class="empty-icon" aria-hidden="true">▦</span><h3>Un escaneo. Tu contacto.</h3><p>Completá tus datos y generá tu QR.<br>La vista previa aparecerá aquí.</p></div><canvas id="qr-canvas" role="img" aria-label="Código QR del contacto generado" hidden></canvas></div>
+          <div class="preview-caption"><strong id="contact-name">Tu tarjeta de contacto</strong><span id="contact-description">vCard 3.0 · Lista para guardar</span></div>
+          <p id="status" class="status" role="status" aria-live="polite">Todavía no generaste un QR.</p>
+          <div id="density" class="density" hidden><div class="density-heading"><strong id="density-label"></strong><span id="density-metrics"></span></div><meter id="density-meter" min="1" max="40" low="10" high="20" optimum="1" value="1" aria-label="Densidad según versión QR"></meter><p id="density-advice"></p></div>
+          <div class="download-grid"><button id="download-png" class="button secondary" disabled>↓ PNG</button><button id="download-svg" class="button secondary" disabled>↓ SVG</button><button id="download-vcf" class="button secondary" disabled>↓ VCF</button></div>
+          <p class="download-hint">PNG para compartir · SVG para imprimir<br>VCF para importar el contacto directamente</p>
+          <details id="vcard-details"><summary>Ver contenido de la vCard</summary><pre id="vcard-content">Generá un contacto para ver sus datos.</pre></details>
+        </section>
+        <section class="note"><span aria-hidden="true">◎</span><div><h3>Tus datos quedan en tu dispositivo</h3><p>El contacto se procesa localmente y no se guarda en esta aplicación. El QR contiene tus datos: compartilo con ese criterio.</p></div></section>
+        <section class="compatibility"><h3>Antes de imprimir</h3><p>Probá el QR con los teléfonos que lo van a usar. Algunos lectores muestran solo una URL; también incluimos LinkedIn en las notas del contacto.</p><p>Si cambiás un dato, necesitás generar y compartir un QR nuevo.</p></section>
+      </aside>
+    </div>
+  </main>
+  <footer><span>QR Studio <span class="footer-dot">·</span> Conectá sin complicaciones.</span><a href="https://github.com/ferhb03/qr-studio" target="_blank" rel="noopener noreferrer">Código abierto ↗</a></footer>
+  <noscript>Activá JavaScript para generar códigos QR. Los datos se procesan en tu dispositivo.</noscript>
+</body>
+</html>
